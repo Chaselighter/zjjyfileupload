@@ -2,6 +2,7 @@ package com.ljq.ossupload.service;
 
 import com.ljq.ossupload.model.Image;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ljq.ossupload.model.MaterialFolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
  * @author astupidcoder
  * @since 2020-12-17
  */
-@Service
 public interface IImageService extends IService<Image> {
 
 }

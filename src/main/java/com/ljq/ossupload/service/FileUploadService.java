@@ -2,6 +2,7 @@ package com.ljq.ossupload.service;
 
 
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.model.OSSObject;
 import com.ljq.ossupload.config.aliyunconfig;
 import com.ljq.ossupload.vo.FileUploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -66,5 +67,27 @@ public class FileUploadService {
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return "images/" +  + System.currentTimeMillis();
+    }
+
+
+    public void exportOssFile(OutputStream os, String objectName) throws IOException {
+        // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
+        OSSObject ossObject = ossClient.getObject(aliyunConfig.getBucketName(), objectName);
+        // 读取文件内容。
+//        ossClient.getObjectMetadata();
+        BufferedInputStream in = new BufferedInputStream(ossObject.getObjectContent());
+        BufferedOutputStream out = new BufferedOutputStream(os);
+        byte[] buffer = new byte[1024];
+        int lenght = 0;
+        while ((lenght = in.read(buffer)) != -1) {
+            out.write(buffer, 0, lenght);
+        }
+        if (out != null) {
+            out.flush();
+            out.close();
+        }
+        if (in != null) {
+            in.close();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.ljq.ossupload.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.EqualsAndHashCode;
 public class MaterialFolder extends Model {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId
     private Integer id;
 
     private String name;
